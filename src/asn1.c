@@ -1,6 +1,8 @@
 #include <Rinternals.h>
 
+#include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "asn1.h"
 
 static SEXP decode_ASN1_bytes(unsigned char *d, unsigned int l, unsigned int *ptr) {
@@ -271,6 +273,41 @@ SEXP PKI_asBIGNUMint(SEXP sWhat, SEXP sScalar) {
     return R_NilValue;
 }
 
+#ifdef WIN32
+int setenv(const char *name, const char *value, int overwrite)
+{
+  int errcode = 0;
+  if(!overwrite) {
+    size_t envsize = 0;
+    errcode = getenv_s(&envsize, NULL, 0, name);
+    if(errcode || envsize) return errcode;
+  }
+  return _putenv_s(name, value);
+}
+int unsetenv(const char *name)
+{
+  _putenv_s(name, "");
+}
+#endif
+
+#include <time.h>
+#include <stdlib.h>
+time_t my_timegm (struct tm *tm) {
+    time_t ret;   
+    char *tz;     
+
+    tz = getenv("TZ"); 
+    setenv("TZ", "GMT", 1);
+    tzset();      
+    ret = mktime(tm); 
+    if (tz)       
+        setenv("TZ", tz, 1);
+     else         
+        unsetenv("TZ");
+     tzset();     
+     return ret;  
+}
+
 /*
 * Parse an ASN1_TIME value and return a time_t structure. According to RFC 5280 (http://www.rfc-editor.org/rfc/rfc5280.txt)
 * conforming implementations "MUST always encode certificate validity dates through the year 2049 as UTCTime; 
@@ -282,9 +319,8 @@ SEXP PKI_asBIGNUMint(SEXP sWhat, SEXP sScalar) {
 * string in ASN1_TIME and extracting the date and time components based on length and results in the string.  It
 * is derived from the publicly posted algorithm here: http://marc.info/?l=openssl-users&m=106781789300592&w=2
 * I use timegm() rather than mktime() to do the conversion to time_t in order to not assume a local time zone during
-* the conversion, but its not clear if timegm() is portable to Windows.  Need to look into that, 
-* possibly proving an implementation for Windows as outlined here: 
-* http://trac.rtmpd.com/browser/trunk/sources/common/src/platform/windows/timegm.cpp
+* the conversion. Note: Since timegm() is not available on windows, the function 'my_timegm' has been written as a 
+* substitute for timegm().
 */
 time_t getTimeFromASN1(const ASN1_TIME * aTime) {
     
@@ -364,7 +400,7 @@ time_t getTimeFromASN1(const ASN1_TIME * aTime) {
 	lTime.tm_isdst = 0;
 
 	// No DST adjustment requested
-	lResult = timegm(&lTime);
+	lResult = my_timegm(&lTime);
 	if ((time_t)-1 != lResult) {
 		if (0 != lTime.tm_isdst) {
 			lResult -= 3600;
@@ -377,3 +413,4 @@ time_t getTimeFromASN1(const ASN1_TIME * aTime) {
 
 	return lResult;
 }
+ 
