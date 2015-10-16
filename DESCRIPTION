@@ -1,5 +1,5 @@
 Package: PKIplus
-Version: 0.0.1.9001
+Version: 0.1.1.9001
 Title: Public Key Infrastucture for R based on the X.509 standard, plus access functions
 Authors@R: c( 
     person("Simon", "Urbanek", role = c("aut"), email ="Simon.Urbanek@r-project.org"), 
