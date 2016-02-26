@@ -273,7 +273,13 @@ SEXP PKI_asBIGNUMint(SEXP sWhat, SEXP sScalar) {
     return R_NilValue;
 }
 
+#include <time.h>
+#include <stdlib.h>
+
 #ifdef WIN32
+errno_t getenv_s( size_t *pReturnValue, char* buffer, size_t numberOfElements, const char *varname );
+errno_t _putenv_s( const char *name, const char *value );
+
 int setenv(const char *name, const char *value, int overwrite)
 {
   int errcode = 0;
@@ -290,8 +296,6 @@ int unsetenv(const char *name)
 }
 #endif
 
-#include <time.h>
-#include <stdlib.h>
 time_t my_timegm (struct tm *tm) {
     time_t ret;   
     char *tz;     
