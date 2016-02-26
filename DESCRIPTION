@@ -1,11 +1,17 @@
 Package: PKIplus
 Version: 0.1.1.9001
-Title: Public Key Infrastucture for R based on the X.509 standard, plus access functions
+Title: Public Key Infrastructure for R Based on the X.509 Standard, Plus Access Functions
 Authors@R: c( 
     person("Simon", "Urbanek", role = c("aut"), email ="Simon.Urbanek@r-project.org"), 
     person("Matthew", "Jones", role = c("aut", "cre"), email ="jones@nceas.ucsb.edu"))
 Depends: R (>= 2.9.0), base64enc
-Description: This package provides PKI functions such as verifying certificates, RSA encription and signing which can be used to build PKI infrastructure and perform cryptographic tasks. It is an extension of the PKI package, with additional methods for accessing metadata from X.509 certificates.
+Suggests: testthat
+Description: Provides functions such as verifying certificates, RSA encription and signing.
+    These functions can be used to build Public Key Infrastructure (PKI) and perform cryptography 
+    related tasks. This package is an extension of the PKI package, with additional methods for 
+    accessing meta data from X.509 certificates. The PKI specification can be found at 
+    <https://tools.ietf.org/html/rfc5280>. RSA is a cryptographic standard specified at 
+    <https://tools.ietf.org/html/rfc3447>.
 License: GPL-2 | GPL-3 | file LICENSE
 URL: http://giithub.com/NCEAS/PKIplus
 SystemRequirements: OpenSSL library
