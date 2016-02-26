@@ -286,7 +286,7 @@ int setenv(const char *name, const char *value, int overwrite)
 }
 int unsetenv(const char *name)
 {
-  _putenv_s(name, "");
+  return(_putenv_s(name, ""));
 }
 #endif
 
