@@ -6,11 +6,11 @@ Authors@R: c(
     person("Matthew", "Jones", role = c("aut", "cre"), email ="jones@nceas.ucsb.edu"))
 Depends: R (>= 2.9.0), base64enc
 Suggests: testthat
-Description: Provides functions such as verifying certificates, RSA encription and signing.
+Description: Provides functions such as verifying certificates, RSA encryption and signing.
     These functions can be used to build Public Key Infrastructure (PKI) and perform cryptography 
     related tasks. This package is an extension of the PKI package, with additional methods for 
     accessing meta data from X.509 certificates. The PKI specification can be found at 
-    <https://tools.ietf.org/html/rfc5280>. RSA is a cryptographic standard specified at 
+    <https://tools.ietf.org/html/rfc5280>. RSA is a cryptography related standard specified at 
     <https://tools.ietf.org/html/rfc3447>.
 License: GPL-2 | GPL-3 | file LICENSE
 URL: http://giithub.com/NCEAS/PKIplus
