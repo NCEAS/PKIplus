@@ -13,5 +13,5 @@ Description: Provides functions such as verifying certificates, RSA encryption a
     <https://tools.ietf.org/html/rfc5280>. RSA is a cryptography related standard specified at 
     <https://tools.ietf.org/html/rfc3447>.
 License: GPL-2 | GPL-3 | file LICENSE
-URL: http://giithub.com/NCEAS/PKIplus
+URL: http://github.com/NCEAS/PKIplus
 SystemRequirements: OpenSSL library
