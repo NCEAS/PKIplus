@@ -14,10 +14,12 @@ test_that("x509 functions work", {
   expect_match(subject, "CN=Simon Urbanek")
   
   # Can the starting date of the cert be extracted?
-  expect_match(PKI.get.notBefore(cert), "2012-09-08 19:16:36")
+  expect_match(format(PKI.get.notBefore(cert), format="%Y-%m-%d %H:%M:%S %Z"), 
+               "2012-09-08 19:16:36 GMT")
   
   # Can the expiration date of the cert be extracted?
-  expect_match(PKI.get.notAfter(cert), "2013-09-08 19:16:36")
+  expect_match(format(PKI.get.notAfter(cert), format="%Y-%m-%d %H:%M:%S %Z"), 
+               "2013-09-08 19:16:36 GMT")
 
   pk <- PKI.pubkey(cert)
   expect_match(class(pk), "public.key")
